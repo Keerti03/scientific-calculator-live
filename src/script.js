@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", function (){
             
     const display = document.getElementById('cal-display');
     const buttons = document.getElementsByClassName('btn');
+    let operator = null;
+
+    
     
 
     let currentValue = "";
@@ -25,29 +28,37 @@ document.addEventListener("DOMContentLoaded", function (){
         currentValue = result.toString();
         display.value = currentValue;
     }
+    function clearCalculator(){
+        currentValue = "";
+        display.value = currentValue;
+    }
+    function deleteLast() {
+        currentValue = currentValue.slice(0, -1);
+        display.value = currentValue;
+      }
 
     for (let i = 0; i < buttons.length; i++){
         const button = buttons[i];
         button.addEventListener('click', function (){
             const value = button.innerText;
             
-            try{
+            
 
                 if (value == "AC"){
                     currentValue = "";
                     display.value = currentValue;
                    }else if(value == "="){
                      evaluateResult();
-                   } else{
+                   }  else if (value === "C") {
+                    clearCalculator(); // Handle clear
+                } else if (value === "Del") {
+                    deleteLast(); // Handle delete
+                } else{
                        currentValue += value;
                       //  console.log('currentValue:', currentValue);
                        display.value = currentValue;
                    }
-            }catch (error){
-                console.error(error);
-                currentValue = "ERROR";
-                display.value = currentValue;
-            }
+            
            
         })
     }
